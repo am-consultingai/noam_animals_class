@@ -1,0 +1,825 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Rubik', 'Heebo', system-ui, sans-serif;
+  direction: rtl;
+  color: #1e293b;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== מבנה הדק ===== */
+.deck {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.slide-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.slide {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  padding: clamp(28px, 4vw, 64px) clamp(28px, 5vw, 80px);
+  padding-bottom: clamp(28px, 4vh, 52px);
+  padding-top: clamp(46px, 6vh, 72px);
+  gap: clamp(8px, 1.4vh, 18px);
+  background: linear-gradient(135deg, #fde68a, #fca5a5);
+}
+
+.float-emoji {
+  line-height: 1;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.25));
+}
+
+/* ===== טיפוגרפיה כללית ===== */
+.slide-title {
+  font-size: clamp(38px, 6vw, 78px);
+  font-weight: 900;
+  color: #1e293b;
+}
+.slide-title.light {
+  color: #fff;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.subtitle {
+  font-size: clamp(24px, 3.4vw, 42px);
+  font-weight: 500;
+  color: #334155;
+}
+.subtitle.light {
+  color: #f8fafc;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.emoji-strip {
+  font-size: clamp(40px, 6vw, 76px);
+  letter-spacing: 0.12em;
+}
+
+/* ===== שקופית פתיחה ===== */
+.title-slide {
+  background: radial-gradient(circle at 50% 30%, #34d399, #0d9488 55%, #115e59);
+}
+/* ===== לוגואים: פיפ"א ומונדיאל ===== */
+.logos-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 34px);
+  flex-wrap: wrap;
+}
+.brand-logo {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  display: flex;
+  align-items: center;
+  padding: clamp(8px, 1.1vh, 14px) clamp(16px, 2vw, 26px);
+}
+.fifa-logo {
+  flex-direction: column;
+  gap: 5px;
+}
+.fifa-word {
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(26px, 3.4vw, 46px);
+  letter-spacing: 0.12em;
+  color: #14213d;
+  line-height: 1;
+}
+.fifa-bar {
+  width: 100%;
+  height: clamp(4px, 0.7vh, 7px);
+  border-radius: 3px;
+  background: linear-gradient(90deg, #e11d2a 0 25%, #1d4ed8 25% 50%, #16a34a 50% 75%, #f59e0b 75% 100%);
+}
+.mondial-logo {
+  gap: clamp(8px, 1vw, 14px);
+}
+.mondial-cup {
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1;
+}
+.mondial-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+  font-weight: 900;
+  font-size: clamp(22px, 2.9vw, 38px);
+  color: #14213d;
+}
+.mondial-text small {
+  font-size: clamp(10px, 1.2vw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #b45309;
+  margin-top: 4px;
+}
+
+.title-main {
+  font-size: clamp(52px, 9vw, 120px);
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  line-height: 1.05;
+}
+.title-slide .subtitle {
+  color: #ecfeff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.hint {
+  font-size: clamp(16px, 2vw, 24px);
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.18);
+  padding: 10px 24px;
+  border-radius: 999px;
+}
+
+/* ===== שורת כרטיסים גדולים ===== */
+.card-row {
+  display: flex;
+  gap: clamp(18px, 2.8vw, 40px);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1500px;
+}
+.big-card {
+  background: #fff;
+  border-radius: 28px;
+  padding: clamp(26px, 3vw, 46px);
+  width: clamp(260px, 30vw, 400px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.big-card-emoji {
+  font-size: clamp(64px, 8vw, 104px);
+}
+.big-card h3 {
+  font-size: clamp(28px, 3.4vw, 42px);
+  color: #0f172a;
+}
+.big-card p {
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: #475569;
+}
+.time-badge {
+  margin-top: 8px;
+  background: #fef3c7;
+  color: #b45309;
+  font-weight: 700;
+  padding: 7px 22px;
+  border-radius: 999px;
+  font-size: clamp(18px, 2.1vw, 24px);
+}
+
+/* ===== שקופית שאלה ===== */
+.question-slide {
+  background: radial-gradient(circle at 50% 35%, #fcd34d, #f59e0b 60%, #b45309);
+}
+.huge-q {
+  font-size: clamp(40px, 6.6vw, 92px);
+  font-weight: 900;
+  color: #422006;
+  max-width: 15ch;
+  line-height: 1.15;
+}
+
+/* ===== שקופית האריות ===== */
+.lions-slide {
+  background: linear-gradient(160deg, #b45309, #78350f);
+}
+.lion-row {
+  font-size: clamp(56px, 9vw, 120px);
+  letter-spacing: 0.05em;
+}
+.info-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  padding: clamp(24px, 2.8vw, 40px);
+  width: clamp(250px, 28vw, 380px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.info-card span {
+  font-size: clamp(52px, 6.5vw, 84px);
+}
+.info-card p {
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ===== שקופית משימה ===== */
+.mission-slide {
+  background: radial-gradient(circle at 50% 30%, #818cf8, #4f46e5 60%, #3730a3);
+}
+.mission-text {
+  font-size: clamp(28px, 4.4vw, 56px);
+  color: #fff;
+  line-height: 1.55;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  max-width: 22ch;
+}
+.mission-text strong {
+  color: #fde047;
+}
+
+/* ===== שקופית ממלכת החי ===== */
+.groups-slide {
+  background: linear-gradient(135deg, #a7f3d0, #6ee7b7);
+}
+.grid6 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2.4vw, 32px);
+  width: 100%;
+  max-width: 1400px;
+}
+.mini-card {
+  background: #fff;
+  border-radius: 24px;
+  border-top: 9px solid var(--accent, #94a3b8);
+  padding: clamp(18px, 2.4vw, 32px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.mini-emoji {
+  font-size: clamp(52px, 6vw, 84px);
+}
+.mini-card h3 {
+  font-size: clamp(26px, 3vw, 38px);
+  color: #0f172a;
+}
+.mini-power {
+  font-size: clamp(20px, 2.3vw, 28px);
+  font-weight: 700;
+  color: var(--accent, #475569);
+}
+
+/* ===== תגית משפחה ===== */
+.group-badge {
+  background: #e2e8f0;
+  color: #334155;
+  font-weight: 700;
+  font-size: clamp(16px, 1.9vw, 22px);
+  padding: 4px 18px;
+  border-radius: 999px;
+}
+.group-badge.light {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ===== שקופית חיה ===== */
+.animal-slide {
+  background: var(--bg, #334155);
+  color: #fff;
+  gap: clamp(6px, 1vh, 14px);
+}
+.animal-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 32px);
+}
+.animal-name {
+  font-size: clamp(38px, 5.2vw, 70px);
+  font-weight: 900;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.power-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #0f172a;
+  border-radius: 20px;
+  padding: clamp(8px, 1.2vw, 16px) clamp(22px, 2.6vw, 38px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+}
+.power-emoji {
+  font-size: clamp(38px, 4.6vw, 60px);
+}
+.power-label {
+  font-size: clamp(15px, 1.7vw, 20px);
+  font-weight: 700;
+  color: var(--accent, #64748b);
+  text-align: right;
+}
+.power-name {
+  font-size: clamp(26px, 3.2vw, 44px);
+  font-weight: 900;
+  text-align: right;
+}
+.soccer-line {
+  font-size: clamp(16px, 2vw, 25px);
+  background: rgba(0, 0, 0, 0.22);
+  padding: 10px 22px;
+  border-radius: 14px;
+  max-width: 46ch;
+  line-height: 1.35;
+}
+.soccer-line strong {
+  color: #fde047;
+}
+.facts-row {
+  display: flex;
+  gap: clamp(12px, 1.6vw, 22px);
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 1500px;
+}
+.fact-card {
+  background: rgba(255, 255, 255, 0.96);
+  color: #1e293b;
+  border-radius: 16px;
+  padding: clamp(10px, 1.2vw, 16px);
+  width: clamp(150px, 15vw, 215px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.fact-emoji {
+  font-size: clamp(26px, 3vw, 40px);
+}
+.fact-label {
+  font-weight: 900;
+  color: var(--accent, #475569);
+  font-size: clamp(16px, 1.8vw, 22px);
+}
+.fact-text {
+  font-size: clamp(13px, 1.5vw, 18px);
+  color: #475569;
+  line-height: 1.3;
+}
+/* ===== אנימציית מגרש בשקופית חיה ===== */
+.field-play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(6px, 1vh, 12px);
+  width: 100%;
+}
+.field-anim {
+  position: relative;
+  width: 100%;
+  max-width: clamp(420px, 58vw, 720px);
+  height: clamp(86px, 12vh, 140px);
+  border-radius: 18px;
+  border: 4px solid rgba(255, 255, 255, 0.55);
+  background: repeating-linear-gradient(
+    90deg,
+    #15803d,
+    #15803d 9%,
+    #16a34a 9%,
+    #16a34a 18%
+  );
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+}
+/* קו אמצע */
+.field-anim::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  bottom: 8%;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateX(-50%);
+}
+.fa-actor {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+  will-change: left, top, transform;
+}
+.fa-sonar-wrap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+.fa-sonar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(60px, 9vw, 110px);
+  height: clamp(60px, 9vw, 110px);
+  margin-left: calc(clamp(60px, 9vw, 110px) / -2);
+  margin-top: calc(clamp(60px, 9vw, 110px) / -2);
+  border: 4px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+}
+.field-anim.bat {
+  height: clamp(74px, 9.5vh, 116px);
+}
+/* ===== סוויפ אולטרסאונד (עטלף) ===== */
+.sweep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 0.8vh, 9px);
+  width: 100%;
+  max-width: clamp(420px, 58vw, 720px);
+}
+.sweep-btn {
+  font-family: inherit;
+  font-weight: 800;
+  font-size: clamp(15px, 1.9vw, 23px);
+  border: none;
+  border-radius: 999px;
+  padding: clamp(6px, 0.9vh, 11px) clamp(20px, 2.4vw, 34px);
+  cursor: pointer;
+  background: #fde047;
+  color: #422006;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+.sweep-btn:hover {
+  transform: translateY(-2px);
+}
+.sweep-btn.on {
+  background: #fca5a5;
+}
+.sweep-meter {
+  width: 100%;
+}
+.sweep-track {
+  position: relative;
+  height: clamp(16px, 2.4vh, 24px);
+  border-radius: 999px;
+  background: linear-gradient(90deg, #34d399, #fde047 55%, #f97316 80%, #ef4444);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+}
+.sweep-track.dragging {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.45);
+}
+.sweep-human {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.sweep-human-tag {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: clamp(11px, 1.3vw, 15px);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  margin-top: 3px;
+}
+.sweep-needle {
+  position: absolute;
+  top: 50%;
+  width: clamp(18px, 2.4vw, 26px);
+  height: clamp(18px, 2.4vw, 26px);
+  margin-left: calc(clamp(18px, 2.4vw, 26px) / -2);
+  transform: translateY(-50%);
+  background: #0f172a;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+}
+.sweep-ticks {
+  position: relative;
+  height: clamp(22px, 2.8vh, 30px);
+  margin-top: 6px;
+  font-size: clamp(11px, 1.3vw, 16px);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+.sweep-tick {
+  position: absolute;
+  top: 6px;
+  white-space: nowrap;
+}
+.sweep-readout {
+  font-size: clamp(14px, 1.7vw, 21px);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.sweep-readout strong {
+  color: #fde047;
+}
+.sweep-readout.inaudible strong {
+  color: #fca5a5;
+}
+
+.fa-caption {
+  font-size: clamp(15px, 1.8vw, 22px);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.beats-lion {
+  background: #fde047;
+  color: #422006;
+  font-weight: 800;
+  font-size: clamp(16px, 2vw, 25px);
+  padding: 10px 24px;
+  border-radius: 999px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+  max-width: 52ch;
+}
+
+/* ===== שקופית הקבוצה (מגרש) ===== */
+.team-slide {
+  background: repeating-linear-gradient(
+    180deg,
+    #15803d,
+    #15803d 8%,
+    #16a34a 8%,
+    #16a34a 16%
+  );
+}
+.pitch {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1vh, 14px);
+  width: 100%;
+  max-width: 1000px;
+  border: 5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 26px;
+  padding: clamp(10px, 1.4vh, 22px);
+  background: rgba(255, 255, 255, 0.06);
+}
+.pitch-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(18px, 2.6vw, 40px);
+}
+.player-chip {
+  background: #fff;
+  border-bottom: 7px solid var(--accent, #94a3b8);
+  border-radius: 18px;
+  padding: clamp(5px, 0.8vw, 11px) clamp(16px, 2vw, 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+  min-width: clamp(116px, 13vw, 172px);
+}
+.chip-emoji {
+  font-size: clamp(28px, 3.3vw, 46px);
+}
+.chip-name {
+  font-weight: 900;
+  font-size: clamp(19px, 2.2vw, 28px);
+  color: #0f172a;
+}
+.chip-pos {
+  font-size: clamp(14px, 1.7vw, 21px);
+  color: var(--accent, #475569);
+  font-weight: 700;
+}
+
+/* ===== שקופית קרב מול האריות ===== */
+.showdown-slide {
+  background: linear-gradient(160deg, #1e3a8a, #1e293b);
+}
+.showdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.5vh, 18px);
+  width: 100%;
+  max-width: 1280px;
+}
+.showdown-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 26px);
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  padding: clamp(12px, 1.5vw, 20px) clamp(20px, 2.4vw, 32px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  text-align: right;
+}
+.sd-emoji {
+  font-size: clamp(40px, 4.6vw, 60px);
+  flex-shrink: 0;
+}
+.sd-pos {
+  font-weight: 900;
+  color: #1d4ed8;
+  font-size: clamp(20px, 2.4vw, 28px);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: clamp(110px, 12vw, 160px);
+}
+.sd-text {
+  font-size: clamp(18px, 2.2vw, 27px);
+  color: #334155;
+}
+
+/* ===== שקופית "למה מגוון מנצח" ===== */
+.why-slide {
+  background: linear-gradient(135deg, #fbcfe8, #c4b5fd);
+}
+
+/* ===== שקופית סיום ===== */
+.closing-slide {
+  background: radial-gradient(circle at 50% 30%, #facc15, #f59e0b 55%, #b45309);
+}
+.closing-main {
+  font-size: clamp(40px, 6.6vw, 92px);
+  font-weight: 900;
+  color: #422006;
+  max-width: 18ch;
+  line-height: 1.15;
+}
+.closing-sub {
+  font-size: clamp(26px, 3.6vw, 44px);
+  color: #7c2d12;
+  font-weight: 700;
+  max-width: 24ch;
+}
+/* ניצחון: הקבוצה מרימה את הגביע, האריות מובסים */
+.champ-winners {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2px, 0.8vh, 10px);
+}
+.champ-cup {
+  font-size: clamp(58px, 9vw, 112px);
+  line-height: 1;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+.champ-team {
+  font-size: clamp(32px, 5.2vw, 66px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.champ-label {
+  font-weight: 800;
+  line-height: 1.2;
+}
+.champ-label.win {
+  color: #14532d;
+  font-size: clamp(22px, 3vw, 38px);
+}
+.champ-losers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2px, 0.6vh, 8px);
+}
+.sad-lions {
+  font-size: clamp(30px, 4.4vw, 56px);
+  line-height: 1;
+  display: flex;
+  gap: clamp(8px, 1.4vw, 20px);
+  filter: grayscale(0.55);
+  opacity: 0.9;
+}
+.cry-lion {
+  position: relative;
+  display: inline-block;
+}
+.cry-lion .tear {
+  position: absolute;
+  left: 30%;
+  top: 46%;
+  font-size: 0.5em;
+  filter: grayscale(0) saturate(1.4);
+}
+.champ-label.lose {
+  color: #7c2d12;
+  font-size: clamp(18px, 2.3vw, 28px);
+}
+
+.closing-kicker {
+  font-size: clamp(24px, 3.2vw, 40px);
+  font-weight: 800;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 14px 30px;
+  border-radius: 999px;
+}
+
+/* ===== ניווט ===== */
+.nav {
+  position: fixed;
+  top: clamp(12px, 2vh, 22px);
+  right: clamp(14px, 2vw, 30px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 20;
+}
+.nav-btn {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: clamp(16px, 1.9vw, 21px);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 28px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1e293b;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+.nav-btn.primary {
+  background: #4f46e5;
+  color: #fff;
+}
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.counter {
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(15px, 1.8vw, 19px);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 7px 16px;
+  border-radius: 999px;
+  min-width: 78px;
+  text-align: center;
+}
+
+/* ===== נקודות ניווט ===== */
+.dots {
+  position: fixed;
+  top: clamp(12px, 2vh, 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 9px;
+  z-index: 20;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.dot.active {
+  background: #fff;
+  transform: scale(1.4);
+}
+
+@media (max-width: 720px) {
+  .grid6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
