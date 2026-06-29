@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { slides } from './slides.jsx'
 
@@ -42,10 +42,39 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [go, jump])
 
+  // ניווט במגע: החלקה אופקית מדפדפת בין שקופיות.
+  // RTL: החלקה שמאלה = הבא, החלקה ימינה = הקודם (כמו החיצים).
+  const touch = useRef(null)
+
+  const onTouchStart = useCallback((e) => {
+    // אל תדפדף כשנוגעים ברכיב אינטראקטיבי (כפתורים, סמן האולטרסאונד)
+    if (e.target.closest('button, .sweep-track')) {
+      touch.current = null
+      return
+    }
+    const t = e.touches[0]
+    touch.current = { x: t.clientX, y: t.clientY }
+  }, [])
+
+  const onTouchEnd = useCallback(
+    (e) => {
+      if (!touch.current) return
+      const t = e.changedTouches[0]
+      const dx = t.clientX - touch.current.x
+      const dy = t.clientY - touch.current.y
+      touch.current = null
+      // החלקה אופקית משמעותית בלבד (לא גלילה אנכית)
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        go(dx < 0 ? 1 : -1)
+      }
+    },
+    [go],
+  )
+
   const Current = slides[index]
 
   return (
-    <div className="deck">
+    <div className="deck" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <AnimatePresence mode="wait" custom={dir}>
         <motion.div
           key={index}

@@ -22,6 +22,7 @@ body {
 .deck {
   position: relative;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
   overflow: hidden;
   background: #0f172a;
@@ -818,8 +819,201 @@ body {
   transform: scale(1.4);
 }
 
-@media (max-width: 720px) {
+/* =====================================================================
+   ===== רספונסיביות למובייל =====
+   ===================================================================== */
+
+/* ---- טאבלט וכל מסך צר ---- */
+@media (max-width: 900px) {
   .grid6 {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .big-card {
+    width: clamp(220px, 80vw, 420px);
+  }
+  .info-card {
+    width: clamp(220px, 80vw, 380px);
+  }
+}
+
+/* ---- טלפונים (פורטרט) ---- */
+@media (max-width: 640px) {
+  /* כשהתוכן ארוך מהמסך — גלילה אנכית במקום חיתוך */
+  .slide {
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: clamp(12px, 2.4vh, 22px);
+    padding: 64px 18px calc(78px + env(safe-area-inset-bottom, 0px));
+    padding-top: max(64px, env(safe-area-inset-top, 0px));
+  }
+  /* מרכוז אנכי כשהתוכן קצר, אך מאפשר גלילה כשהוא ארוך */
+  .slide::before,
+  .slide::after {
+    content: '';
+    flex: 1 0 auto;
+  }
+
+  /* טיפוגרפיה גדולה יותר במובייל (vw לבדו נהיה קטן מדי) */
+  .slide-title {
+    font-size: clamp(30px, 8vw, 46px);
+  }
+  .subtitle {
+    font-size: clamp(18px, 5vw, 26px);
+  }
+  .title-main {
+    font-size: clamp(44px, 13vw, 72px);
+  }
+  .huge-q,
+  .closing-main {
+    font-size: clamp(32px, 9vw, 56px);
+    max-width: 18ch;
+  }
+  .mission-text {
+    font-size: clamp(24px, 6.5vw, 38px);
+  }
+
+  /* שורות כרטיסים — מתפרשות לעמודה */
+  .card-row {
+    gap: 16px;
+  }
+  .big-card {
+    width: min(90vw, 420px);
+  }
+  .info-card {
+    width: min(86vw, 360px);
+  }
+
+  /* ממלכת החי — שתי עמודות צפופות יותר */
+  .grid6 {
+    gap: 12px;
+  }
+
+  /* שקופית חיה — צפופה, מתאימה את עצמה */
+  .animal-header {
+    gap: 14px;
+  }
+  .facts-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 460px;
+  }
+  .fact-card {
+    width: auto;
+  }
+  .soccer-line {
+    font-size: clamp(15px, 4vw, 20px);
+    max-width: 92vw;
+  }
+  .beats-lion {
+    font-size: clamp(15px, 4vw, 20px);
+    max-width: 92vw;
+  }
+
+  /* מגרש האנימציה — רוחב מלא */
+  .field-anim,
+  .sweep {
+    max-width: 94vw;
+  }
+
+  /* שקופית הקבוצה — שורות שנפרשות */
+  .pitch {
+    max-width: 94vw;
+  }
+  .pitch-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .player-chip {
+    min-width: clamp(96px, 28vw, 150px);
+  }
+
+  /* קרב מול האריות — שורות גמישות */
+  .showdown-row {
+    gap: 12px;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+  .sd-pos {
+    min-width: 0;
+  }
+  .sd-text {
+    flex-basis: 100%;
+  }
+
+  /* סיום */
+  .champ-team {
+    font-size: clamp(26px, 7vw, 50px);
+  }
+
+  /* ===== ניווט: מעבירים לתחתית, נגיש לאגודל ===== */
+  .nav {
+    top: auto;
+    right: 50%;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(50%);
+    gap: 10px;
+  }
+  .nav-btn {
+    padding: 11px 22px;
+    font-size: 16px;
+  }
+  .counter {
+    font-size: 14px;
+    min-width: 64px;
+    padding: 8px 12px;
+  }
+
+  /* נקודות הניווט קומפקטיות יותר למעלה */
+  .dots {
+    top: calc(8px + env(safe-area-inset-top, 0px));
+    gap: 6px;
+    max-width: 92vw;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+/* ---- טלפונים קטנים מאוד ---- */
+@media (max-width: 380px) {
+  .slide {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .emoji-strip {
+    font-size: clamp(30px, 9vw, 48px);
+  }
+}
+
+/* ---- טלפון בשכיבה (מסך נמוך) ---- */
+@media (max-height: 480px) and (orientation: landscape) {
+  .slide {
+    padding-top: 14px;
+    padding-bottom: 56px;
+    gap: clamp(6px, 1.4vh, 12px);
+  }
+  .nav {
+    top: 8px;
+    right: 12px;
+    bottom: auto;
+    transform: none;
+  }
+  .dots {
+    top: 8px;
+  }
+}
+
+/* מסכי מגע — הגדלת אזורי לחיצה והסרת השהיית hover */
+@media (hover: none) {
+  .nav-btn:hover:not(:disabled) {
+    transform: none;
+  }
+  .sweep-btn:hover {
+    transform: none;
   }
 }

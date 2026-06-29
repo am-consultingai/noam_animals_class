@@ -526,7 +526,7 @@ function TitleSlide() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        דפדפו עם החיצים ⬅️ ➡️ או עם מקש הרווח
+        החליקו באצבע 👆 או דפדפו עם החיצים ⬅️ ➡️
       </motion.p>
     </section>
   )
